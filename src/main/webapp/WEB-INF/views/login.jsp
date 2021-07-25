@@ -4,8 +4,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="resources/css/semantic.min.css">
+
 <style>
-	.login-form {
+/* 	.login-form {
 		display: flex;
 		flex-direction: column;
 		width: fit-content;
@@ -45,11 +47,26 @@
 	}
 	.register-link a{
 		text-decoration: none;
-	}
+	} */
+    .column {
+      max-width: 450px;
+    }
+     body > .grid {
+      height: 50%;
+    }
+    a{
+    	color: gray;
+    	font-weight: normal;
+    	text-decoration: underline;
+    }
+    img{
+    	width: 150px;
+    	height: 150px;
+    }
 </style>
 </head>
 <body>
-	<form class="login-form" action="login" method="post">
+<!-- 	<form class="login-form" action="login" method="post">
 		<div class="form-item">
 			<label for="userId">아이디</label>
 			<input name="userId" type="text" value=""/>
@@ -62,6 +79,22 @@
 	</form>
 	<div class="register-link">
 		<a href="register">회원가입</a>
+	</div> -->
+	<div class="ui middle aligned center aligned grid">
+	  <div class="column">
+	  	<img src="resources/img/orange.gif">
+		<form class="ui form" action="login" method="post">
+			<div class="field">
+				<input name="userId" type="text" placeholder="아이디를 입력하세요."/>
+			</div>
+			<div class="field">
+				<input name="userPw" type="password" placeholder="비밀번호를 입력하세요."/>
+			</div>
+			<button class="ui fluid large inverted orange button" type="submit">로그인</button>
+		</form>
+	    <h5 class="ui header"><a href="register">회원가입</a></h5>
+      		
+	  </div>
 	</div>
 </body>
 </html>
