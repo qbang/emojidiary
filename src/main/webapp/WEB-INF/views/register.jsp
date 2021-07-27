@@ -4,8 +4,9 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+	<link rel="stylesheet" type="text/css" href="resources/css/semantic.min.css">
 	<title>모두의 기분</title>
-	<style>
+<!-- 	<style>
 		.register-form {
 			display: flex;
 			flex-direction: column;
@@ -39,10 +40,22 @@
 			padding: 5px 0;
 			margin-top: 2rem;
 		}
-	</style>
+	</style> -->
+	<style>
+	    .column {
+	      max-width: 450px;
+	    }
+	     body > .grid {
+	      height: 50%;
+	    }
+        img{
+    	width: 150px;
+    	height: 150px;
+   		 }
+    </style>
 </head>
 <body>
-	<form class="register-form" action="register" method="post" name="registerInfo">
+<!-- 	<form class="register-form" action="register" method="post" name="registerInfo">
 		<div class="form-item">
 			<label for="userId">아이디</label>
 			<input name="userId" type="text" value="">
@@ -56,6 +69,21 @@
 			<input name="userPwCheck" type="password" value=""> 
 		</div>
 		<button class="submit-btn" type="submit">가입</button>
-	</form>
+	</form> -->
+	
+	<div class="ui middle aligned center aligned grid">
+	  <div class="column">
+	  	<img src="resources/img/plant.gif">
+		<form class="ui form" action="register" method="post" name="registerInfo">
+			<div class="field">
+				<input name="userId" type="text" placeholder="아이디를 입력하세요."/>
+			</div>
+			<div class="field">
+				<input name="userPw" type="password" placeholder="비밀번호를 입력하세요."/>
+			</div>
+			<button class="ui fluid large inverted orange button" type="submit">회원가입</button>
+		</form>
+	  </div>
+	</div>
 </body>
 </html>
