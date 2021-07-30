@@ -20,6 +20,11 @@
 		<property name="password" value="tnwjd12!"/>
 	</bean>
 	
+    <bean id="calendarData" class="com.qbang.emojidiary.CalendarData" scope="session">
+        <!-- this next element effects the proxying of the surrounding bean -->
+        <aop:scoped-proxy/>
+	</bean>
+	
 	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource"> 
 	    <constructor-arg ref="dataSourceSpied" /> 
 	    <property name="logFormatter"> 
