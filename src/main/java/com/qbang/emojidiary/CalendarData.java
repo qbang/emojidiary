@@ -4,14 +4,12 @@ import java.util.Calendar;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
- 
+import org.springframework.stereotype.Component;
+
+@Component
 @Scope(value="session", proxyMode=ScopedProxyMode.TARGET_CLASS)
 public class CalendarData {
-	private Calendar cal;
-	
-	public CalendarData(){
-		cal = Calendar.getInstance();
-	}
+	private Calendar cal = Calendar.getInstance();
 	public String getToday() {
 		return cal.get(Calendar.YEAR)+"-"+(cal.get(Calendar.MONTH)+1)+"-"
 				+cal.get(Calendar.DATE);
