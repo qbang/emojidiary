@@ -2,6 +2,10 @@ package com.qbang.emojidiary.implement;
 
 import java.util.*;
 import javax.annotation.Resource;
+import javax.inject.Inject;
+import javax.inject.Provider;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qbang.emojidiary.CalendarData;
@@ -10,7 +14,6 @@ import com.qbang.emojidiary.domain.DateVO;
 import com.qbang.emojidiary.domain.DetailParam;
 import com.qbang.emojidiary.persistance.DateDAO;
 import com.qbang.emojidiary.persistance.FeelingDAO;
-
 
 @Service("CalendarService")
 public class CalendarService {
@@ -24,13 +27,16 @@ public class CalendarService {
 	@Resource(name="TransformService")
 	private TransformService transformService;
 	
-	private CalendarData calendarData = new CalendarData();
+	@Autowired 
+	private CalendarData calendarData;
 	
-	public Map<Integer, Object> getCalendarInfo(String userId, int value){	
+	// 달력 넘길 때
+	public Map<Integer, Object> getCalendarInfo(String userId, int value){
 		calendarData.setMonth(value);
 		
 		String year = calendarData.getYear();
 		String month = calendarData.getMonth();
+		System.out.println("Month -> "+month);
 		String first_day = calendarData.getFirstDay();
 		int last_day = Integer.parseInt(calendarData.getLastDay());
 		
@@ -66,5 +72,13 @@ public class CalendarService {
 	
 	public String getMonth() {
 		return calendarData.getMonth();
+	}
+	
+	public String getDay() {
+		return calendarData.getDay();
+	}
+	
+	public void initDate() {
+		calendarData.initCalendar();
 	}
 }
