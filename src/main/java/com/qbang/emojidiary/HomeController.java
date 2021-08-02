@@ -63,7 +63,6 @@ public class HomeController {
 			if(loginService.checkUser(userId, userPw)) {
 				HttpSession session = req.getSession();
 				session.setAttribute("userId", userId);
-				
 				return "redirect:/calendar?value="+0;
 			}
 			// �����ϰų� �������� ��쿡�� ��� login �������� �ӹ�
@@ -121,10 +120,9 @@ public class HomeController {
 		return "home";
 	}
 	
-	// home.jsp���� Ŭ������ ��
+	// today.jsp에서 이모티콘 클릭했을 때
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
 	public String detail(Model model, HttpServletRequest req, HttpServletResponse res, @RequestParam Map<String, String> param) {
-		// session ��ȿ���� üũ
 		HttpSession session = req.getSession();
 		if(session.getAttribute("userId") == null) {
 			return "login";
@@ -135,42 +133,39 @@ public class HomeController {
 		String year, month, day = null;
 		List<String> feeling_arr = null;
 		
-		// today.jsp���� ǥ�� �������� ��
+		//오늘 이모티콘 선택했을 때
 		if(param.get("year") == null || param.get("month") == null || param.get("day") == null) {
-			CalendarData cal2 = new CalendarData();
+//			CalendarData cal2 = new CalendarData();
+//			
+//			year = cal2.getYear();
+//			month = cal2.getMonth();
+//			day = cal2.getDay();
 			
-			year = cal2.getYear();
-			month = cal2.getMonth();
-			day = cal2.getDay();
-			// feeling���� value �����ϰ� ��ȯ�������
+			calendarService.initDate();
+			
+			year = calendarService.getYear();
+			month = calendarService.getMonth();
+			day = calendarService.getDay();
+			
 			feeling = Integer.parseInt(param.get("value"));
 			feeling_src = transformService.numToString(feeling);
 			
 			model.addAttribute("feeling", feeling);
-		}else {	// �޷¿��� �����ϸ� feeling_arr ����
+		}else {	// 달력 클릭했을 때 
 			year = param.get("year");
 			month = param.get("month");
 			day = param.get("day");
 			
 			feeling_arr = Arrays.asList(transformService.img); 
 			
-			// ǥ���� ���������� radio checked�� �־��� ���� ���� ����
+			// radio checked 해줄 이모티콘 찾기 
 			if(param.get("value") != null && param.get("value").contains("/")) {
 				feeling_src = param.get("value");
 				feeling = transformService.srcToNum(param.get("value"));
 				model.addAttribute("feeling", feeling);
-			}else {	// ��¥�� ���������� �� �� ����
+			}else {	// 처음 이모티콘 입력할 때
 				model.addAttribute("feeling", null);
 			}
-			
-//			if(param.get("value") != null && param.get("value").contains("/")) {
-//				feeling_src = param.get("value");
-//				feeling = transformService.srcToNum(param.get("value"));
-//				model.addAttribute("feeling", feeling);
-//			}else { // �׳� ��¥ �������� ���� �̹����� ��θ� �迭�� �Ѱ���
-//				feeling_arr = Arrays.asList(transformService.img); 
-//				model.addAttribute("feeling", null);
-//			}
 		}
 		
 		// �ش� ��¥�� ����� ����� ����� ���� �� ������ detail ������. jsp���� null üũ
