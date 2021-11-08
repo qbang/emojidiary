@@ -43,13 +43,13 @@ public class HomeController {
 	@Resource(name="TransformService")
 	private TransformService transformService;
 	
-	// ������ �����ϸ� �ٷ� login�϶�� �Ѱ���
+	// 로그인 페이지 요청 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale) {
 		return "login";
 	}
 	
-	// login â���� Ȯ�ι�ư ������ ��
+	// 로그인 정보가 맞는지 확인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(Model model, HttpServletRequest req, HttpServletResponse res) {
 		
@@ -59,13 +59,13 @@ public class HomeController {
 			String userId = req.getParameter("userId");
 			String userPw = req.getParameter("userPw");
 			
-			// �α��� ���� ȣ�� �� ���� ���� üũ
+			// 로그인 성공
 			if(loginService.checkUser(userId, userPw)) {
 				HttpSession session = req.getSession();
 				session.setAttribute("userId", userId);
 				return "redirect:/calendar?value="+0;
 			}
-			// �����ϰų� �������� ��쿡�� ��� login �������� �ӹ�
+			// 로그인 실패 
 			else {
 				return "login";
 			}
@@ -75,13 +75,13 @@ public class HomeController {
 		}
 	}
 	
-	// login���� ȸ������ ������ ��
+	// 회원가입 페이지 요청
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String register(HttpServletRequest req, HttpServletResponse res) {
 		return "register";
 	}
 	
-	// ȸ������ â���� Ȯ�ι�ư ������ ��
+	// 회원가입 정보 등록
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String registerMember(HttpServletRequest req, HttpServletResponse res) {
 		try {
@@ -102,7 +102,7 @@ public class HomeController {
 		}
 	}
 	
-	// �α��� �������� ���� ȸ���������� �� �޷� ���� ��û
+	// 달력 정보와 함께 메인 페이지 요청
 	@RequestMapping(value = "/calendar", method = RequestMethod.GET)
 	public String calendar(Model model, HttpServletRequest req, HttpServletResponse res, @RequestParam int value) {
 		HttpSession session = req.getSession();
@@ -120,7 +120,7 @@ public class HomeController {
 		return "home";
 	}
 	
-	// today.jsp에서 이모티콘 클릭했을 때
+	// 메인에서 이모티콘 클릭했을 때
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
 	public String detail(Model model, HttpServletRequest req, HttpServletResponse res, @RequestParam Map<String, String> param) {
 		HttpSession session = req.getSession();
@@ -133,14 +133,9 @@ public class HomeController {
 		String year, month, day = null;
 		List<String> feeling_arr = null;
 		
-		//오늘 이모티콘 선택했을 때
+		//today.jsp에서 이모티콘 선택했을 때
 		if(param.get("year") == null || param.get("month") == null || param.get("day") == null) {
-//			CalendarData cal2 = new CalendarData();
-//			
-//			year = cal2.getYear();
-//			month = cal2.getMonth();
-//			day = cal2.getDay();
-			
+			//날짜 초기화
 			calendarService.initDate();
 			
 			year = calendarService.getYear();
@@ -151,7 +146,7 @@ public class HomeController {
 			feeling_src = transformService.numToString(feeling);
 			
 			model.addAttribute("feeling", feeling);
-		}else {	// 달력 클릭했을 때 
+		}else {	// 달력에 있는 이모티콘을 클릭했을 때 
 			year = param.get("year");
 			month = param.get("month");
 			day = param.get("day");
@@ -168,7 +163,7 @@ public class HomeController {
 			}
 		}
 		
-		// �ش� ��¥�� ����� ����� ����� ���� �� ������ detail ������. jsp���� null üũ
+		// 날짜와 등록된 메모 가져오기
 		String detail = calendarService.getDetail(year+"-"+month+"-"+day, (String)session.getAttribute("userId"));
 		
 		model.addAttribute("detail", detail);
@@ -181,10 +176,9 @@ public class HomeController {
 		return "detail";
 	}
 
-	// detail.jsp���� �Է¿Ϸ� ���� ��
+	// detail.jsp에서 입력한 메모와 기분 이모티콘 등록
 	@RequestMapping(value="/registerFeeling", method = RequestMethod.POST)
 	public String registerFeeling(Model model, HttpServletRequest req, HttpServletResponse res) {
-		// session ��ȿ���� üũ
 		HttpSession session = req.getSession();
 		if(session.getAttribute("userId") == null) {
 			return "login";
