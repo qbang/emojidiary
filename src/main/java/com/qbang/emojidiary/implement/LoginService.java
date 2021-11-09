@@ -21,7 +21,8 @@ public class LoginService {
 		
 		String id = memberVO.getUserId();
 		String pw = memberVO.getUserPw();
-		
+
+		//로그인 성공 여부를 체크한다.
 		if(id.equals(userId) && passwordEcoder.matches(userPw, pw)) {
 			return true;
 		}else {
