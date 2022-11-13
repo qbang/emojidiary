@@ -26,5 +26,5 @@
 # Other libraries
 ### Semantic UI & Bootstrap
 - https://semantic-ui.com/
-- Bootstrap](https://getbootstrap.kr/
+- https://getbootstrap.kr/
 - View의 stylesheet로 활용하였습니다.
